@@ -1,5 +1,7 @@
 # ARTIST-APP
 
+(GAMMEL OPGAVE OMSKREVET TIL GO)
+
 Projektet opfylder kravene for CRUD-operationer. De nævnte funktioner spiller sammen med get, post, put og delete metoderne i backenden.
 
 Applikation har også fået inkorporeret et søgefelt og en dropdown menu som fungerer gennem brugen af hhv. filtrering og sortering. Derudover Kan brugeren tilføje sine favorit kunstnere til en favoritliste som kan vises i sit eget “view”.
@@ -30,7 +32,8 @@ Brug package manager [npm](https://www.npmjs.com/) til at installere de korrekte
 npm install
 ```
 
-Find index.html-filen og åbn den i en live server.
+Find index.html-filen i frontend projektet og åbn den i en live server.
+
 
 ## Brug
 

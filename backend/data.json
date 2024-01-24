@@ -515,20 +515,5 @@
   "website": "https://www.earthwindandfire.com/",
   "image": "https://i.scdn.co/image/ab6761610000e5eb9722e16a886767adf1178f92",
   "shortDescription": "American band known for their fusion of various music genres."
- },
- {
-  "id": "721f10bd-a507-4b23-b1f1-91f797521bfa",
-  "name": "Mickey",
-  "birthdate": "2024-01-05",
-  "activeSince": "1928",
-  "genres": [
-   "RnB"
-  ],
-  "labels": [
-   "Death Row"
-  ],
-  "website": "https://www.disney.dk/",
-  "image": "https://cdn.britannica.com/53/252953-050-30D00122/Mickey-Mouse-Steamboat-Willie-Walt-Disney-Public-Domain.jpg",
-  "shortDescription": "Likkle man"
  }
 ]

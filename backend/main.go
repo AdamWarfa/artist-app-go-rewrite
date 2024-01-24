@@ -1,7 +1,7 @@
 package main
 
 import (
-	"artist-app-backend/controllers"
+	"artist-app-backend/internals/controllers"
 
 	"github.com/gofiber/fiber/v2/middleware/cors"
 
@@ -16,6 +16,7 @@ func main() {
 	app.Get("/artists", controllers.GetArtists)
 	app.Post("/artists", controllers.PostArtist)
 	app.Put("/artists/:id", controllers.UpdateArtist)
+	app.Delete("/artists/:id", controllers.DeleteArtist)
 
 	app.Listen(":3000")
 }

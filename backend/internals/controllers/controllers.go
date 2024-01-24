@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"artist-app-backend/internals/services"
 	"artist-app-backend/models"
 	"encoding/json"
 	"fmt"
@@ -12,46 +13,25 @@ import (
 )
 
 func GetArtists(c *fiber.Ctx) error {
-	data, err := os.ReadFile("data.json")
-
-	if err != nil {
+	artists := services.ReadArtistFile()
+	if artists == nil {
 		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{
 			"error": "Couldn't read artists.json",
 		})
 	}
 
-	var artists []models.Artist
-
-	err = json.Unmarshal(data, &artists)
-
-	if err != nil {
-		fmt.Println(err)
-		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{
-			"error": "Couldn't parse artists.json",
-		})
-	}
-
+	fmt.Println("Artists retrieved")
 	c.Type("json")
 	return c.Status(http.StatusOK).JSON(artists)
 }
 
 func PostArtist(c *fiber.Ctx) error {
-	data, err := os.ReadFile("data.json")
 
-	if err != nil {
+	artists := services.ReadArtistFile()
+
+	if artists == nil {
 		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{
 			"error": "Couldn't read artists.json",
-		})
-	}
-
-	var artists []models.Artist
-
-	err = json.Unmarshal(data, &artists)
-
-	if err != nil {
-		fmt.Println(err)
-		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{
-			"error": "Couldn't parse artists.json",
 		})
 	}
 
@@ -86,31 +66,16 @@ func PostArtist(c *fiber.Ctx) error {
 		})
 	}
 
+	fmt.Println("Artist created")
 	c.Type("json")
 	return c.Status(http.StatusCreated).JSON(artists)
 
 }
 
 func UpdateArtist(c *fiber.Ctx) error {
-
 	id := c.Params("id")
 
-	data, err := os.ReadFile("data.json")
-	if err != nil {
-		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{
-			"error": "Couldn't read artists.json",
-		})
-	}
-
-	var artists []models.Artist
-
-	err = json.Unmarshal(data, &artists)
-	if err != nil {
-		fmt.Println(err)
-		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{
-			"error": "Couldn't parse artists.json",
-		})
-	}
+	artists := services.ReadArtistFile()
 
 	var updatedArtist models.Artist
 
@@ -148,6 +113,42 @@ func UpdateArtist(c *fiber.Ctx) error {
 		})
 	}
 
+	fmt.Println("Artist updated")
+	c.Type("json")
+	return c.Status(http.StatusOK).JSON(artists)
+}
+
+func DeleteArtist(c *fiber.Ctx) error {
+	id := c.Params("id")
+
+	artists := services.ReadArtistFile()
+
+	for i, artist := range artists {
+		if artist.ID == id {
+			artists = append(artists[:i], artists[i+1:]...)
+			break
+		}
+	}
+
+	file, err := json.MarshalIndent(artists, "", " ")
+
+	if err != nil {
+		fmt.Println(err)
+		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{
+			"error": "Couldn't parse artists.json",
+		})
+	}
+
+	err = os.WriteFile("data.json", file, 0644)
+
+	if err != nil {
+		fmt.Println(err)
+		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{
+			"error": "Couldn't write to artists.json",
+		})
+	}
+
+	fmt.Println("Artist deleted")
 	c.Type("json")
 	return c.Status(http.StatusOK).JSON(artists)
 }

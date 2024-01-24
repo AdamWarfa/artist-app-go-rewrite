@@ -14,6 +14,7 @@ func main() {
 	app.Use(cors.New())
 
 	app.Get("/artists", controllers.GetArtists)
+	app.Get("/artists/:id", controllers.GetSingleArtist)
 	app.Post("/artists", controllers.PostArtist)
 	app.Put("/artists/:id", controllers.UpdateArtist)
 	app.Delete("/artists/:id", controllers.DeleteArtist)

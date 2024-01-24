@@ -25,6 +25,23 @@ func GetArtists(c *fiber.Ctx) error {
 	return c.Status(http.StatusOK).JSON(artists)
 }
 
+func GetSingleArtist(c *fiber.Ctx) error {
+	id := c.Params("id")
+
+	artists := services.ReadArtistFile()
+
+	var foundArtist models.Artist
+
+	for _, artist := range artists {
+		if artist.ID == id {
+			fmt.Println("Artist retrieved")
+			foundArtist = artist
+		}
+	}
+	c.Type("json")
+	return c.Status(http.StatusOK).JSON(foundArtist)
+}
+
 func PostArtist(c *fiber.Ctx) error {
 
 	artists := services.ReadArtistFile()
